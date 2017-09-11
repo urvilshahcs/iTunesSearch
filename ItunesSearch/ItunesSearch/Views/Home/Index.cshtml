@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Itunes Search";
+}
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container" style="text-align:center">
+    <div style="margin: 0 auto;width: 400px;border: 0px;margin-top: 100px;" class="list-group-item">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Search Term</td>
+                        <td>Count</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in ViewBag.SearchCounts)
+                    {
+                        <tr>
+                            <td>
+                                <a href="@Url.Action("Search", "Home", new { Term = i.Term })">@i.Term</a>
+                            </td>
+                            <td>
+                                @i.Count
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @*@foreach (var i in ViewBag.SearchCounts)
+            {
+                <a href="@Url.Action("Search", "Home", new { Term = i.Term })" class="list-group-item">@i.Term</a>
+            }*@
+    </div>
+</div>

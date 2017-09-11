@@ -1,0 +1,97 @@
+﻿@model List<ItunesSearch.Models.GroupedResult>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Search Results</h2>
+
+    @foreach (var item in Model.OrderByDescending(a=>a.results.Count))
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                @item.Type
+            </div>
+            <div class="panel-body list-group" style="max-height: 400px; overflow-y: scroll;">
+
+                @if (item.Type == "Artists")
+                {
+                    foreach(var d in item.results)
+                    {
+                        <a style="width:auto;margin:4px;float:left;border:0px" href="@Url.Action("CountAndGO", "Home", new { URL = d.artistLinkUrl, SearchTerm=ViewBag.value })" class="list-group-item">
+                            @*<div style="width:100px">*@
+                            @if (d.artworkUrl100 == null)
+                            {
+                                <img style="float:left" src="~/Content/Default.png" class="img img-rounded" />
+
+                            }
+                            else
+                            {
+                                <img style="float:left" src="@d.artworkUrl100" class="img img-rounded" />
+
+                            }
+                            <div style="display:block;text-align:center">
+                                @d.artistName<br />
+                            </div>
+
+                            @*</div>*@
+                        </a>
+                    }
+                }
+                else if(item.Type == "Albums")
+                {
+                    foreach (var d in item.results)
+                    {
+                        <a href="@Url.Action("CountAndGO", "Home", new { URL = d.collectionViewUrl, SearchTerm=ViewBag.value })" class="list-group-item">
+                            @*<div style="width:100px">*@
+                            <img style="float:left" src="@d.artworkUrl60" class="img img-rounded" />
+                            <div style="display:inline-block;margin:0px 10px">
+                                @d.collectionName<br />
+                                <small>@d.artistName</small><br />
+                                <small>@d.collectionName</small>
+                            </div>
+
+                            @*</div>*@
+                        </a>
+                    }
+                }
+                else if(item.Type== "Audiobooks")
+                {
+                    foreach (var d in item.results)
+                    {
+                        <a href="@Url.Action("CountAndGO", "Home", new { URL = d.collectionViewUrl, SearchTerm=ViewBag.value })" class="list-group-item">
+                            @*<div style="width:100px">*@
+                            <img style="float:left" src="@d.artworkUrl60" class="img img-rounded" />
+                            <div style="display:inline-block;margin:0px 10px">
+                                @d.trackName<br />
+                                <small>@d.artistName</small><br />
+                                <small>@d.collectionName</small>
+                            </div>
+
+                            @*</div>*@
+                        </a>
+                    }
+                }
+                else
+                {
+                    foreach(var d in item.results)
+                    {
+                        <a href="@Url.Action("CountAndGO", "Home", new { URL = d.trackViewUrl, SearchTerm=ViewBag.value })" class="list-group-item">
+                            @*<div style="width:100px">*@
+                            <img style="float:left" src="@d.artworkUrl60" class="img img-rounded" />
+                            <div style="display:inline-block;margin:0px 10px">
+                                @d.trackName<br />
+                                <small>@d.artistName</small><br />
+                                <small>@d.collectionName</small>
+                            </div>
+
+                            @*</div>*@
+                        </a>
+                    }
+                }
+               
+            </div>
+        </div>
+    }
+
+</div>
